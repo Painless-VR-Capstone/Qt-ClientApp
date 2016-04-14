@@ -17,7 +17,9 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    task_platformhopper.ui \
+    task_passiveFlyAround.ui
 
 RESOURCES += \
     resources.qrc
