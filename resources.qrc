@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/tab_selected.png</file>
+        <file>images/tab_unselected.png</file>
+    </qresource>
+</RCC>

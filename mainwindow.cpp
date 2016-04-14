@@ -1,15 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QJsonObject>
 #include <QFile>
 #include <QJsonDocument>
 #include <QDataStream>
 #include <QIODevice>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QPalette>
+#include <QDebug>
 
 const QString FILENAME("preset.json");
 
+/*
+ * Sets up ui, sets
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -21,6 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->redLabel->setText("175");
     ui->greenLabel->setText("220");
     ui->blueLabel->setText("136");
+    ui->task1Button->setChecked(true);
+    setPreviewColor();
 }
 
 MainWindow::~MainWindow()
@@ -56,13 +62,27 @@ void MainWindow::on_saveButton_clicked()
     }
 }
 
-void MainWindow::writeToFile(QFile *file)
+QJsonObject MainWindow::getJSONObject()
 {
     QJsonObject json;
-    json.insert("red", ui->redSlider->value());
-    json.insert("green", ui->greenSlider->value());
-    json.insert("blue", ui->blueSlider->value());
-    QJsonDocument doc(json);
+    json.insert("color", getColorFromSliders().name(QColor::HexArgb));
+    QString taskValue;
+    if (ui->task1Button->isChecked()) {
+        taskValue = "task1";
+    } else if (ui->task2Button->isChecked()) {
+        taskValue = "task2";
+    } else if (ui->task3Button->isChecked()) {
+        taskValue = "task3";
+    } else {
+        taskValue = "task4";
+    }
+    json.insert("task", taskValue);
+    return json;
+}
+
+void MainWindow::writeToFile(QFile *file)
+{
+    QJsonDocument doc(getJSONObject());
     file->open(QIODevice::WriteOnly);
     file->write(doc.toJson(QJsonDocument::Indented));
     QMessageBox box;
@@ -77,17 +97,36 @@ void MainWindow::writeToFile(QFile *file)
 void MainWindow::on_blueSlider_sliderMoved(int position)
 {
     ui->blueLabel->setText(QString::number(position));
+    setPreviewColor();
 }
 
 void MainWindow::on_greenSlider_sliderMoved(int position)
 {
     ui->greenLabel->setText(QString::number(position));
+    setPreviewColor();
 }
 
 void MainWindow::on_redSlider_sliderMoved(int position)
 {
     ui->redLabel->setText(QString::number(position));
+    setPreviewColor();
 }
+void MainWindow::setPreviewColor()
+{
+    QPalette palette = ui->colorPreviewFrame->palette();
+    palette.setColor(QPalette::Background, getColorFromSliders());
+    ui->colorPreviewFrame->setAutoFillBackground(true);
+    ui->colorPreviewFrame->setPalette(palette);
+}
+
+/*
+ * Returns a QColor with the RGB values on the sliders and an alpha of 255
+ */
+QColor MainWindow::getColorFromSliders()
+{
+    return QColor(ui->redSlider->value(), ui->greenSlider->value(), ui->blueSlider->value());
+}
+
 void MainWindow::on_saveAsButton_clicked()
 {
     QFileDialog dialog(this);
@@ -103,5 +142,15 @@ void MainWindow::on_saveAsButton_clicked()
             writeToFile(&file);
         }
     }
+}
 
+void MainWindow::on_logJSONButton_clicked()
+{
+    QJsonObject json = getJSONObject();
+    qDebug() << "{";
+    foreach (QString key, json.keys())
+    {
+        qDebug() << "   " << key << ":" << json.value(key).toString() << ",";
+    }
+    qDebug() << "}";
 }

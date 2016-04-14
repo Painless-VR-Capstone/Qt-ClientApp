@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QFile>
+#include <QColor>
+#include <QJsonObject>
 
 
 namespace Ui {
@@ -15,8 +17,6 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-
-    void writeToFile(QFile *file);
 
     ~MainWindow();
 
@@ -31,8 +31,18 @@ private slots:
 
     void on_saveAsButton_clicked();
 
+    void on_logJSONButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    void writeToFile(QFile *file);
+
+    void setPreviewColor();
+
+    QColor getColorFromSliders();
+
+    QJsonObject getJSONObject();
 };
 
 #endif // MAINWINDOW_H
