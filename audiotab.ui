@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>Task_PlatformHopper</class>
- <widget class="QWidget" name="Task_PlatformHopper">
+ <class>AudioTab</class>
+ <widget class="QWidget" name="AudioTab">
   <property name="geometry">
    <rect>
     <x>0</x>

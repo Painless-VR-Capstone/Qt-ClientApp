@@ -13,13 +13,23 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    audiotab.cpp \
+    tasktab.cpp \
+    task_passiveflyaround.cpp \
+    task_platformhopper.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    audiotab.h \
+    tasktab.h \
+    task_passiveflyaround.h \
+    task_platformhopper.h
 
 FORMS    += mainwindow.ui \
-    task_platformhopper.ui \
-    task_passiveFlyAround.ui
+    audiotab.ui \
+    tasktab.ui \
+    task_passiveflyaround.ui \
+    task_platformhopper.ui
 
 RESOURCES += \
     resources.qrc

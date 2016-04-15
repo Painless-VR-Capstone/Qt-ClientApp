@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>Task_PassiveFlyAround</class>
+ <widget class="QWidget" name="Task_PassiveFlyAround">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>572</height>
+    <width>435</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
