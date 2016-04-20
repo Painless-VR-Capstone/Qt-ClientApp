@@ -34,9 +34,11 @@ private slots:
 
     void on_actionSave_As_triggered();
 
+    void on_actionSave_and_run_Unity_triggered();
+
 private:
     Ui::MainWindow *mainWindowUi;
-    void writeToFile(QFile *file);
+    void writeToFile(QFile *file, bool withMessage);
     void setPreviewColor();
     QJsonObject getJSONObject();
     TaskTab *taskTab;

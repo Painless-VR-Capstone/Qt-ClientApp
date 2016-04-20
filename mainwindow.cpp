@@ -9,6 +9,7 @@
 #include <QPalette>
 #include <QDebug>
 #include <QWidget>
+#include <QProcess>
 
 const QString FILENAME("preset.json");
 
@@ -59,18 +60,21 @@ QJsonObject MainWindow::getJSONObject()
     return json;
 }
 
-void MainWindow::writeToFile(QFile *file)
+void MainWindow::writeToFile(QFile *file, bool withMessage = true)
 {
     QJsonDocument doc(getJSONObject());
     file->open(QIODevice::WriteOnly);
     file->write(doc.toJson(QJsonDocument::Indented));
-    QMessageBox box;
-    QString message("Saved preset to ");
-    message.append(file->fileName());
-    box.setText(message);
-    box.setStandardButtons(QMessageBox::Ok);
-    box.setDefaultButton(QMessageBox::Ok);
-    box.exec();
+    if (withMessage)
+    {
+        QMessageBox box;
+        QString message("Saved preset to ");
+        message.append(file->fileName());
+        box.setText(message);
+        box.setStandardButtons(QMessageBox::Ok);
+        box.setDefaultButton(QMessageBox::Ok);
+        box.exec();
+    }
 }
 
 //void MainWindow::on_logJSONButton_clicked()
@@ -128,3 +132,57 @@ void MainWindow::on_actionSave_As_triggered()
         }
     }
 }
+
+void MainWindow::on_actionSave_and_run_Unity_triggered()
+{
+    QDir dir;
+    dir.cdUp();
+    if (!dir.exists("PVR_Unity_Prototype"))
+    {
+        QMessageBox messageBox;
+        QString message("It appears the Qt client is not in directory where it is adjacent to a PainlessVR unity build.");
+        messageBox.setText(message);
+        messageBox.setStandardButtons(QMessageBox::Ok);
+        messageBox.setDefaultButton(QMessageBox::Ok);
+        messageBox.exec();
+        return;
+    }
+    dir.cd("PVR_Unity_Prototype");
+    QFile unityFile(dir.filePath("PVR.exe"));
+    qDebug() << "Unity file name:" << unityFile.fileName();
+    if (!unityFile.exists()) {
+        QMessageBox messageBox;
+        QString message("It appears there is no unity executable in the PVR_unity_prototype directory.");
+        messageBox.setText(message);
+        messageBox.setStandardButtons(QMessageBox::Ok);
+        messageBox.setDefaultButton(QMessageBox::Ok);
+        messageBox.exec();
+        return;
+    }
+    QFile preset(dir.path().append("preset.json"));
+    writeToFile(&preset, false);
+    qDebug() << "Unity file name:" << unityFile.fileName();
+    QProcess::startDetached(unityFile.fileName());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
