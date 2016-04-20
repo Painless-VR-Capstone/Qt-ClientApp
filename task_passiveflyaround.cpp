@@ -12,3 +12,9 @@ Task_PassiveFlyAround::~Task_PassiveFlyAround()
 {
     delete passiveFlyAroundUi;
 }
+
+QJsonObject Task_PassiveFlyAround::getJsonObject()
+{
+    QJsonObject json;
+    return json;
+}

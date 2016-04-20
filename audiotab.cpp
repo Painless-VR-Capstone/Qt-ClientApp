@@ -13,18 +13,3 @@ AudioTab::~AudioTab()
 {
     delete audioTabUi;
 }
-
-//void AudioTab::on_thunderOnOffButton_toggled(bool checked)
-//{
-    
-//}
-
-//void AudioTab::on_windOnOffButton_toggled(bool checked)
-//{
-    
-//}
-
-//void AudioTab::on_rainOnOffButton_toggled(bool checked)
-//{
-    
-//}

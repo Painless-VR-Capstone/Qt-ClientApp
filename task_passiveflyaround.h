@@ -2,6 +2,7 @@
 #define TASK_PASSIVEFLYAROUND_H
 
 #include <QWidget>
+#include <QJsonObject>
 
 namespace Ui {
 class Task_PassiveFlyAround;
@@ -14,6 +15,7 @@ class Task_PassiveFlyAround : public QWidget
 public:
     explicit Task_PassiveFlyAround(QWidget *parent = 0);
     ~Task_PassiveFlyAround();
+    QJsonObject getJsonObject();
 
 private:
     Ui::Task_PassiveFlyAround *passiveFlyAroundUi;
