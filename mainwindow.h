@@ -5,6 +5,9 @@
 #include <QFile>
 #include <QColor>
 #include <QJsonObject>
+#include <QTabWidget>
+#include "tasktab.h"
+#include "audiotab.h"
 
 
 namespace Ui {
@@ -17,32 +20,19 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-
     ~MainWindow();
 
-private slots:
-    void on_saveButton_clicked();
-
-    void on_blueSlider_sliderMoved(int position);
-
-    void on_greenSlider_sliderMoved(int position);
-
-    void on_redSlider_sliderMoved(int position);
-
-    void on_saveAsButton_clicked();
-
-    void on_logJSONButton_clicked();
+//private slots:
+//    void on_saveButton_clicked();
+//    void on_saveAsButton_clicked();
 
 private:
-    Ui::MainWindow *ui;
-
+    Ui::MainWindow *mainWindowUi;
     void writeToFile(QFile *file);
-
     void setPreviewColor();
-
-    QColor getColorFromSliders();
-
     QJsonObject getJSONObject();
+    TaskTab *taskTab;
+//    AudioTab audioTab;
 };
 
 #endif // MAINWINDOW_H

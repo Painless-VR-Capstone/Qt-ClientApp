@@ -16,7 +16,7 @@ public:
     ~Task_PlatformHopper();
 
 private:
-    Ui::Task_PlatformHopper *ui;
+    Ui::Task_PlatformHopper *platformHopperUi;
 };
 
 #endif // TASK_PLATFORMHOPPER_H

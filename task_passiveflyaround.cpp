@@ -3,12 +3,12 @@
 
 Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Task_PassiveFlyAround)
+    passiveFlyAroundUi(new Ui::Task_PassiveFlyAround)
 {
-    ui->setupUi(this);
+    passiveFlyAroundUi->setupUi(this);
 }
 
 Task_PassiveFlyAround::~Task_PassiveFlyAround()
 {
-    delete ui;
+    delete passiveFlyAroundUi;
 }

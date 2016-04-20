@@ -41,29 +41,17 @@
     </property>
     <item>
      <widget class="QTabWidget" name="tabWidget">
-      <property name="tabPosition">
-       <enum>QTabWidget::North</enum>
-      </property>
-      <property name="tabShape">
-       <enum>QTabWidget::Rounded</enum>
-      </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
-      <widget class="QWidget" name="taskTab">
+      <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Task</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout"/>
       </widget>
-      <widget class="QWidget" name="audioTab">
+      <widget class="QWidget" name="tab_2">
        <attribute name="title">
         <string>Audio</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Visual</string>
        </attribute>
       </widget>
      </widget>

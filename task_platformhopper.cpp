@@ -3,12 +3,12 @@
 
 Task_PlatformHopper::Task_PlatformHopper(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Task_PlatformHopper)
+    platformHopperUi(new Ui::Task_PlatformHopper)
 {
-    ui->setupUi(this);
+    platformHopperUi->setupUi(this);
 }
 
 Task_PlatformHopper::~Task_PlatformHopper()
 {
-    delete ui;
+    delete platformHopperUi;
 }

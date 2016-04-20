@@ -3,12 +3,28 @@
 
 AudioTab::AudioTab(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AudioTab)
+    audioTabUi(new Ui::AudioTab)
 {
-    ui->setupUi(this);
+    audioTabUi->setupUi(this);
+    
 }
 
 AudioTab::~AudioTab()
 {
-    delete ui;
+    delete audioTabUi;
 }
+
+//void AudioTab::on_thunderOnOffButton_toggled(bool checked)
+//{
+    
+//}
+
+//void AudioTab::on_windOnOffButton_toggled(bool checked)
+//{
+    
+//}
+
+//void AudioTab::on_rainOnOffButton_toggled(bool checked)
+//{
+    
+//}

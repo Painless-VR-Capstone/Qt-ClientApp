@@ -16,7 +16,7 @@ public:
     ~Task_PassiveFlyAround();
 
 private:
-    Ui::Task_PassiveFlyAround *ui;
+    Ui::Task_PassiveFlyAround *passiveFlyAroundUi;
 };
 
 #endif // TASK_PASSIVEFLYAROUND_H
