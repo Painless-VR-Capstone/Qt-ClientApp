@@ -1,0 +1,9 @@
+.QWidget {
+    background-color: #82B46F;
+    border-style: outset;
+    border-width: 0px;
+    border-radius: 10px;
+    border-color: #82B46F;
+    min-width: 10em;
+    padding: 6px;
+}

@@ -5,6 +5,9 @@
 #include <QPalette>
 #include <QColor>
 #include "utils.h"
+#include <QResource>
+#include <QTextStream>
+#include <QFile>
 
 TaskTab::TaskTab(QWidget *parent) :
     QWidget(parent),
@@ -12,25 +15,39 @@ TaskTab::TaskTab(QWidget *parent) :
 {
     taskTabUi->setupUi(this);
     passiveFlyAroundWidget = new Task_PassiveFlyAround(taskTabUi->taskOptionsWidget);
-    platformHopperWidget = new Task_PlatformHopper(taskTabUi->taskOptionsWidget);
-    /*
-     * TEST CODE
-     */
-//    QPalette palette = taskTabUi->taskOptionsWidget->palette();
-//    palette.setColor(QPalette::Background, QColor::fromRgb(0, 0, 255));
-//    taskTabUi->taskOptionsWidget->setAutoFillBackground(true);
-//    taskTabUi->taskOptionsWidget->setPalette(palette);
-//    palette = passiveFlyAroundWidget->palette();
-//    palette.setColor(QPalette::Background, QColor::fromRgb(0, 255, 0));
-//    passiveFlyAroundWidget->setAutoFillBackground(true);
-//    passiveFlyAroundWidget->setPalette(palette);
-    /*
-     * END TEST CODE
-     */
+
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(passiveFlyAroundWidget);
     taskTabUi->taskOptionsWidget->setLayout(layout);
+    readInStyleSheets();
+
+    // Set button style sheets
+    taskTabUi->passiveButton->setStyleSheet(taskButtonStyle);
+    taskTabUi->coinCollectorButton->setStyleSheet(taskButtonStyle);
+    taskTabUi->puzzleSolverButton->setStyleSheet(taskButtonStyle);
+    taskTabUi->platformHopperButton->setStyleSheet(taskButtonStyle);
+    // Set taskBox style sheets
+    taskTabUi->taskBox->setStyleSheet(taskBoxStyle);
+    Utils::giveWidgetShadow(taskTabUi->taskBox, false);
+
+    // Set Buttons to have no focus so system doesn't auto highlight them
+    taskTabUi->passiveButton->setFocusPolicy(Qt::NoFocus);
+    taskTabUi->coinCollectorButton->setFocusPolicy(Qt::NoFocus);
+    taskTabUi->puzzleSolverButton->setFocusPolicy(Qt::NoFocus);
+    taskTabUi->platformHopperButton->setFocusPolicy(Qt::NoFocus);
+
+    // Set Buttons auto-exclusive so only one of them can be checked at a time
+    taskTabUi->passiveButton->setAutoExclusive(true);
+    taskTabUi->coinCollectorButton->setAutoExclusive(true);
+    taskTabUi->platformHopperButton->setAutoExclusive(true);
+    taskTabUi->puzzleSolverButton->setAutoExclusive(true);
     on_passiveButton_clicked();
+}
+
+void TaskTab::readInStyleSheets()
+{
+    taskButtonStyle = Utils::readInStyleSheet("task_button.style");
+    taskBoxStyle = Utils::readInStyleSheet("task_options_background_white.style");
 }
 
 TaskTab::~TaskTab()
@@ -90,34 +107,22 @@ void TaskTab::on_passiveButton_clicked()
 {
     setTaskOptionsLayout(passiveFlyAround);
     taskTabUi->passiveButton->setChecked(true);
-    taskTabUi->platformHopperButton->setChecked(false);
-    taskTabUi->coinCollectorButton->setChecked(false);
-    taskTabUi->puzzleSolverButton->setChecked(false);
 }
 
 void TaskTab::on_platformHopperButton_clicked()
 {
     setTaskOptionsLayout(platformHopper);
-    taskTabUi->passiveButton->setChecked(false);
     taskTabUi->platformHopperButton->setChecked(true);
-    taskTabUi->coinCollectorButton->setChecked(false);
-    taskTabUi->puzzleSolverButton->setChecked(false);
 }
 
 void TaskTab::on_coinCollectorButton_clicked()
 {
     setTaskOptionsLayout(coinCollector);
-    taskTabUi->passiveButton->setChecked(false);
-    taskTabUi->platformHopperButton->setChecked(false);
     taskTabUi->coinCollectorButton->setChecked(true);
-    taskTabUi->puzzleSolverButton->setChecked(false);
 }
 
 void TaskTab::on_puzzleSolverButton_clicked()
 {
     setTaskOptionsLayout(puzzleSolver);
-    taskTabUi->passiveButton->setChecked(false);
-    taskTabUi->platformHopperButton->setChecked(false);
-    taskTabUi->coinCollectorButton->setChecked(false);
     taskTabUi->puzzleSolverButton->setChecked(true);
 }

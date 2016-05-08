@@ -30,19 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mainWindowUi->tabWidget->addTab(audioTab, "Audio");
     mainWindowUi->tabWidget->addTab(visualTab, "Visual");
     currentTab = Task;
-    /*
-     * TEST CODE
-     */
-    QMessageBox messageBox;
-    messageBox.setText("FYI only the task choice, hue, saturation, brightness,"
-                "and contrast variables are working right now.");
-    messageBox.setStandardButtons(QMessageBox::Ok);
-    messageBox.setDefaultButton(QMessageBox::Ok);
-    messageBox.exec();
-    /*
-     * END TEST CODE
-     */
-//    tabWidget.addTab(&audioTab, "Audio");
 }
 
 MainWindow::~MainWindow()

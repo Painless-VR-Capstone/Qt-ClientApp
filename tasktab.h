@@ -40,7 +40,10 @@ private:
     Task_PassiveFlyAround *passiveFlyAroundWidget;
     Task_PlatformHopper *platformHopperWidget;
     TaskLayout currentTask;
+    QString taskButtonStyle;
+    QString taskBoxStyle;
 
+    void readInStyleSheets();
     void setTaskOptionsLayout(TaskLayout newLayout);
 };
 
