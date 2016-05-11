@@ -42,6 +42,7 @@ private:
     TaskLayout currentTask;
     QString taskButtonStyle;
     QString taskBoxStyle;
+    QString emptyStyle;
 
     void readInStyleSheets();
     void setTaskOptionsLayout(TaskLayout newLayout);

@@ -24,12 +24,12 @@ Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
     passiveFlyAroundUi->lookBasedTurningRadioButton->setAutoExclusive(true);
     passiveFlyAroundUi->instantKeyboardRadioButton->setAutoExclusive(true);
     passiveFlyAroundUi->smoothKeyboardRadioButton->setAutoExclusive(true);
-    passiveFlyAroundUi->passiveBox->setStyleSheet(taskBackgroundWhiteStyle);
-    passiveFlyAroundUi->activeSpeedBox->setStyleSheet(transparentBackgroundStyle);
-    passiveFlyAroundUi->passiveSpeedBox->setStyleSheet(transparentBackgroundStyle);
-    passiveFlyAroundUi->turningTypeBox->setStyleSheet(transparentBackgroundStyle);
-    passiveFlyAroundUi->projectileBox->setStyleSheet(transparentBackgroundStyle);
-    Utils::giveWidgetShadow(passiveFlyAroundUi->passiveBox);
+//    passiveFlyAroundUi->passiveBox->setStyleSheet(taskBackgroundWhiteStyle);
+//    passiveFlyAroundUi->activeSpeedBox->setStyleSheet(transparentBackgroundStyle);
+//    passiveFlyAroundUi->passiveSpeedBox->setStyleSheet(transparentBackgroundStyle);
+//    passiveFlyAroundUi->turningTypeBox->setStyleSheet(transparentBackgroundStyle);
+//    passiveFlyAroundUi->projectileBox->setStyleSheet(transparentBackgroundStyle);
+//    Utils::giveWidgetShadow(passiveFlyAroundUi->passiveBox);
 }
 
 Task_PassiveFlyAround::~Task_PassiveFlyAround()

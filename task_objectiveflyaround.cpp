@@ -8,18 +8,18 @@ Task_ObjectiveFlyAround::Task_ObjectiveFlyAround(QWidget *parent) :
 {
     objectiveFlyAroundUi->setupUi(this);
     readInStyleSheets();
-    objectiveFlyAroundUi->objectiveBox->setStyleSheet(whiteBackground);
-    Utils::giveWidgetShadow(objectiveFlyAroundUi->objectiveBox);
-    objectiveFlyAroundUi->scoringBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->amountBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->checkBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->coinsBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->difficultyBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->enemyBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->roundBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->scoringBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->timeLimitBox->setStyleSheet(transparentBackground);
-    objectiveFlyAroundUi->wallCollisionsBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->objectiveBox->setStyleSheet(whiteBackground);
+//    Utils::giveWidgetShadow(objectiveFlyAroundUi->objectiveBox);
+//    objectiveFlyAroundUi->scoringBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->amountBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->checkBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->coinsBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->difficultyBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->enemyBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->roundBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->scoringBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->timeLimitBox->setStyleSheet(transparentBackground);
+//    objectiveFlyAroundUi->wallCollisionsBox->setStyleSheet(transparentBackground);
 }
 
 void Task_ObjectiveFlyAround::readInStyleSheets()
