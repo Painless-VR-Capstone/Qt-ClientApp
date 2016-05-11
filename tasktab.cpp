@@ -1,6 +1,5 @@
 #include "tasktab.h"
 #include "ui_tasktab.h"
-#include <QGridLayout>
 #include <QDebug>
 #include <QPalette>
 #include <QColor>
@@ -14,17 +13,26 @@ TaskTab::TaskTab(QWidget *parent) :
     taskTabUi(new Ui::TaskTab)
 {
     taskTabUi->setupUi(this);
-    passiveFlyAroundWidget = new Task_PassiveFlyAround(taskTabUi->taskOptionsWidget);
+    passiveFlyAroundWidget = new Task_PassiveFlyAround(taskTabUi->passiveFlyAroundBox);
+    objectiveFlyAroundWidget = new Task_ObjectiveFlyAround(taskTabUi->objectiveFlyAroundBox);
+    platformHopperWidget = new Task_PlatformHopper(taskTabUi->platformHopperButton);
+    QGridLayout *passiveLayout = new QGridLayout();
+    QGridLayout *objectiveLayout = new QGridLayout();
+    QGridLayout *platformLayout = new QGridLayout();
+    passiveLayout->addWidget(passiveFlyAroundWidget);
+    objectiveLayout->addWidget(objectiveFlyAroundWidget);
+    platformLayout->addWidget(platformHopperWidget);
+    QPalette palette = taskTabUi->emptyBox->palette();
+    palette.setColor(QPalette::Background, QColor(Qt::transparent));
+    taskTabUi->emptyBox->setAutoFillBackground(true);
+    taskTabUi->emptyBox->setPalette(palette);
+    taskTabUi->emptyBox->update();
 
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(passiveFlyAroundWidget);
-    taskTabUi->taskOptionsWidget->setLayout(layout);
     readInStyleSheets();
 
     // Set button style sheets
     taskTabUi->passiveButton->setStyleSheet(taskButtonStyle);
-    taskTabUi->coinCollectorButton->setStyleSheet(taskButtonStyle);
-    taskTabUi->puzzleSolverButton->setStyleSheet(taskButtonStyle);
+    taskTabUi->objectiveFlyAroundButton->setStyleSheet(taskButtonStyle);
     taskTabUi->platformHopperButton->setStyleSheet(taskButtonStyle);
     // Set taskBox style sheets
     taskTabUi->taskBox->setStyleSheet(taskBoxStyle);
@@ -32,15 +40,13 @@ TaskTab::TaskTab(QWidget *parent) :
 
     // Set Buttons to have no focus so system doesn't auto highlight them
     taskTabUi->passiveButton->setFocusPolicy(Qt::NoFocus);
-    taskTabUi->coinCollectorButton->setFocusPolicy(Qt::NoFocus);
-    taskTabUi->puzzleSolverButton->setFocusPolicy(Qt::NoFocus);
+    taskTabUi->objectiveFlyAroundButton->setFocusPolicy(Qt::NoFocus);
     taskTabUi->platformHopperButton->setFocusPolicy(Qt::NoFocus);
 
     // Set Buttons auto-exclusive so only one of them can be checked at a time
     taskTabUi->passiveButton->setAutoExclusive(true);
-    taskTabUi->coinCollectorButton->setAutoExclusive(true);
     taskTabUi->platformHopperButton->setAutoExclusive(true);
-    taskTabUi->puzzleSolverButton->setAutoExclusive(true);
+    taskTabUi->objectiveFlyAroundButton->setAutoExclusive(true);
     on_passiveButton_clicked();
 }
 
@@ -53,8 +59,6 @@ void TaskTab::readInStyleSheets()
 TaskTab::~TaskTab()
 {
     delete taskTabUi;
-//    delete passiveFlyAroundWidget;
-//    delete platformHopperWidget;
 }
 
 void TaskTab::setTaskOptionsLayout(TaskLayout newLayout)
@@ -67,17 +71,26 @@ void TaskTab::setTaskOptionsLayout(TaskLayout newLayout)
     switch (newLayout)
     {
     case passiveFlyAround:
+        taskTabUi->passiveFlyAroundBox->setVisible(true);
+        taskTabUi->emptyBox->setVisible(true);
+        taskTabUi->platformHopperBox->setVisible(false);
+        taskTabUi->objectiveFlyAroundBox->setVisible(false);
         break;
     case platformHopper:
+        taskTabUi->passiveFlyAroundBox->setVisible(false);
+        taskTabUi->emptyBox->setVisible(true);
+        taskTabUi->platformHopperBox->setVisible(true);
+        taskTabUi->objectiveFlyAroundBox->setVisible(false);
         break;
-    case coinCollector:
-        break;
-    case puzzleSolver:
+    case objectiveFlyAround:
+        taskTabUi->passiveFlyAroundBox->setVisible(true);
+        taskTabUi->emptyBox->setVisible(false);
+        taskTabUi->platformHopperBox->setVisible(false);
+        taskTabUi->objectiveFlyAroundBox->setVisible(true);
         break;
     }
     currentTask = newLayout;
 }
-
 
 void TaskTab::addValuesToJson(QJsonObject *json)
 {
@@ -92,11 +105,8 @@ void TaskTab::addValuesToJson(QJsonObject *json)
     case platformHopper:
         task = 2;
         break;
-    case coinCollector:
+    case objectiveFlyAround:
         task = 3;
-        break;
-    case puzzleSolver:
-        task = 4;
         break;
     }
     json->insert("task", task);
@@ -109,20 +119,14 @@ void TaskTab::on_passiveButton_clicked()
     taskTabUi->passiveButton->setChecked(true);
 }
 
+void TaskTab::on_objectiveFlyAroundButton_clicked()
+{
+    setTaskOptionsLayout(objectiveFlyAround);
+    taskTabUi->objectiveFlyAroundButton->setChecked(true);
+}
+
 void TaskTab::on_platformHopperButton_clicked()
 {
     setTaskOptionsLayout(platformHopper);
     taskTabUi->platformHopperButton->setChecked(true);
-}
-
-void TaskTab::on_coinCollectorButton_clicked()
-{
-    setTaskOptionsLayout(coinCollector);
-    taskTabUi->coinCollectorButton->setChecked(true);
-}
-
-void TaskTab::on_puzzleSolverButton_clicked()
-{
-    setTaskOptionsLayout(puzzleSolver);
-    taskTabUi->puzzleSolverButton->setChecked(true);
 }

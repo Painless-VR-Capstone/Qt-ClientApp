@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     task_platformhopper.cpp \
     utils.cpp \
     visualtab.cpp \
-    switch.cpp
+    switch.cpp \
+    task_objectiveflyaround.cpp
 
 HEADERS  += mainwindow.h \
     audiotab.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     task_platformhopper.h \
     utils.h \
     visualtab.h \
-    switch.h
+    switch.h \
+    task_objectiveflyaround.h
 
 FORMS    += mainwindow.ui \
     audiotab.ui \
@@ -37,7 +39,8 @@ FORMS    += mainwindow.ui \
     task_passiveflyaround.ui \
     task_platformhopper.ui \
     visualtab.ui \
-    switch.ui
+    switch.ui \
+    task_objectiveflyaround.ui
 
 RESOURCES += \
     resources.qrc

@@ -5,6 +5,8 @@
 #include "task_passiveflyaround.h"
 #include "task_platformhopper.h"
 #include <QJsonObject>
+#include "task_objectiveflyaround.h"
+#include <QGridLayout>
 
 namespace Ui {
     class TaskTab;
@@ -17,8 +19,7 @@ class TaskTab : public QWidget
 enum TaskLayout {
     passiveFlyAround,
     platformHopper,
-    coinCollector,
-    puzzleSolver
+    objectiveFlyAround
 };
 
 public:
@@ -29,16 +30,15 @@ public:
 private slots:
     void on_passiveButton_clicked();
 
+    void on_objectiveFlyAroundButton_clicked();
+
     void on_platformHopperButton_clicked();
-
-    void on_coinCollectorButton_clicked();
-
-    void on_puzzleSolverButton_clicked();
 
 private:
     Ui::TaskTab *taskTabUi;
     Task_PassiveFlyAround *passiveFlyAroundWidget;
     Task_PlatformHopper *platformHopperWidget;
+    Task_ObjectiveFlyAround *objectiveFlyAroundWidget;
     TaskLayout currentTask;
     QString taskButtonStyle;
     QString taskBoxStyle;

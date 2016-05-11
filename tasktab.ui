@@ -14,6 +14,54 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="horizontalSpacing">
+    <number>18</number>
+   </property>
+   <item row="0" column="1">
+    <widget class="QWidget" name="platformHopperBox" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QWidget" name="objectiveFlyAroundBox" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QWidget" name="passiveFlyAroundBox" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>64</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QWidget" name="taskBox" native="true">
      <property name="sizePolicy">
@@ -39,7 +87,7 @@
       <item>
        <widget class="QPushButton" name="passiveButton">
         <property name="text">
-         <string>Passive</string>
+         <string>Passive Fly Arpound</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -50,29 +98,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="objectiveFlyAroundButton">
+        <property name="text">
+         <string>Objective Fly Around</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="platformHopperButton">
         <property name="text">
          <string>Platform Hopper</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="coinCollectorButton">
-        <property name="text">
-         <string>Coin Collector</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="puzzleSolverButton">
-        <property name="text">
-         <string>Puzzle Solver</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -133,11 +171,11 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QWidget" name="taskOptionsWidget" native="true">
+   <item row="0" column="3">
+    <widget class="QWidget" name="emptyBox" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-       <horstretch>2</horstretch>
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>

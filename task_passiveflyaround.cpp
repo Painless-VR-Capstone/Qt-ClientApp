@@ -9,6 +9,7 @@
 #include <QBrush>
 #include <QIcon>
 #include <QSize>
+#include <QMessageBox>
 
 Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
     QWidget(parent),
@@ -16,27 +17,19 @@ Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
 {
     passiveFlyAroundUi->setupUi(this);
     readInStyleSheets();
-    passiveFlyAroundUi->optionsBox->setStyleSheet(taskBackgroundGreenStyle);
-    Utils::giveWidgetShadow(passiveFlyAroundUi->optionsBox);
-    passiveFlyAroundUi->movementBox->setStyleSheet(taskBackgroundWhiteStyle);
-    passiveFlyAroundUi->elementsBox->setStyleSheet(taskBackgroundWhiteStyle);
-    initialButtonSize = passiveFlyAroundUi->switchDirection->size();
-    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchDirection,
+    initialButtonSize = passiveFlyAroundUi->projectilesSwitch->size();
+    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->projectilesSwitch,
                                 initialButtonSize,
                                 switchStyle);
-    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchReactiveEnvironment,
-                                initialButtonSize,
-                                switchStyle);
-    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchSpeed,
-                                initialButtonSize,
-                                switchStyle);
-    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchTeleporting,
-                                initialButtonSize,
-                                switchStyle);
-    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchThrowProjectiles,
-                                initialButtonSize,
-                                switchStyle);
-
+    passiveFlyAroundUi->lookBasedTurningRadioButton->setAutoExclusive(true);
+    passiveFlyAroundUi->instantKeyboardRadioButton->setAutoExclusive(true);
+    passiveFlyAroundUi->smoothKeyboardRadioButton->setAutoExclusive(true);
+    passiveFlyAroundUi->passiveBox->setStyleSheet(taskBackgroundWhiteStyle);
+    passiveFlyAroundUi->activeSpeedBox->setStyleSheet(transparentBackgroundStyle);
+    passiveFlyAroundUi->passiveSpeedBox->setStyleSheet(transparentBackgroundStyle);
+    passiveFlyAroundUi->turningTypeBox->setStyleSheet(transparentBackgroundStyle);
+    passiveFlyAroundUi->projectileBox->setStyleSheet(transparentBackgroundStyle);
+    Utils::giveWidgetShadow(passiveFlyAroundUi->passiveBox);
 }
 
 Task_PassiveFlyAround::~Task_PassiveFlyAround()
@@ -49,6 +42,8 @@ void Task_PassiveFlyAround::readInStyleSheets()
     taskBackgroundGreenStyle = Utils::readInStyleSheet("task_options_background_green.style");
     taskBackgroundWhiteStyle = Utils::readInStyleSheet("task_options_background_white.style");
     switchStyle = Utils::readInStyleSheet("switch.style");
+    transparentBackgroundStyle = Utils::readInStyleSheet("transparent_background.style");
+
 }
 
 QJsonObject Task_PassiveFlyAround::getJsonObject()
@@ -57,37 +52,56 @@ QJsonObject Task_PassiveFlyAround::getJsonObject()
     return json;
 }
 
-void Task_PassiveFlyAround::on_switchSpeed_toggled(bool checked)
+void Task_PassiveFlyAround::on_projectilesSwitch_toggled(bool checked)
 {
-    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchSpeed,
+    Utils::setSwitchButtonBackground(passiveFlyAroundUi->projectilesSwitch,
                                      initialButtonSize,
                                      checked);
 }
 
-void Task_PassiveFlyAround::on_switchDirection_toggled(bool checked)
+void Task_PassiveFlyAround::showNumberProblemBox()
 {
-    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchDirection,
-                                     initialButtonSize,
-                                     checked);
+    QMessageBox box;
+    box.setText("Please enter a number.");
+    box.exec();
 }
 
-void Task_PassiveFlyAround::on_switchThrowProjectiles_toggled(bool checked)
+void Task_PassiveFlyAround::on_passiveSpeedLineEdit_editingFinished()
 {
-    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchThrowProjectiles,
-                                     initialButtonSize,
-                                     checked);
+    QString text = passiveFlyAroundUi->passiveSpeedLineEdit->text();
+    if (text.isEmpty())
+    {
+        return;
+    }
+    bool ok;
+    ulong speed = text.toULong(&ok);
+    if (!ok)
+    {
+        showNumberProblemBox();
+        passiveFlyAroundUi->passiveSpeedLineEdit->setFocus();
+    }
+    else
+    {
+        passiveSpeed = speed;
+    }
 }
 
-void Task_PassiveFlyAround::on_switchTeleporting_toggled(bool checked)
+void Task_PassiveFlyAround::on_activeSpeedLineEdit_editingFinished()
 {
-    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchTeleporting,
-                                     initialButtonSize,
-                                     checked);
-}
-
-void Task_PassiveFlyAround::on_switchReactiveEnvironment_toggled(bool checked)
-{
-    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchReactiveEnvironment,
-                                     initialButtonSize,
-                                     checked);
+    QString text = passiveFlyAroundUi->passiveSpeedLineEdit->text();
+    if (text.isEmpty())
+    {
+        return;
+    }
+    bool ok;
+    ulong speed = text.toULong(&ok);
+    if (!ok)
+    {
+        showNumberProblemBox();
+        passiveFlyAroundUi->activeSpeedLineEdit->setFocus();
+    }
+    else
+    {
+        activeSpeed = speed;
+    }
 }

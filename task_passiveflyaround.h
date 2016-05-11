@@ -20,25 +20,25 @@ public:
     QJsonObject getJsonObject();
 
 private slots:
-    void on_switchSpeed_toggled(bool checked);
+    void on_projectilesSwitch_toggled(bool checked);
 
-    void on_switchDirection_toggled(bool checked);
+    void on_passiveSpeedLineEdit_editingFinished();
 
-    void on_switchThrowProjectiles_toggled(bool checked);
-
-    void on_switchTeleporting_toggled(bool checked);
-
-    void on_switchReactiveEnvironment_toggled(bool checked);
+    void on_activeSpeedLineEdit_editingFinished();
 
 private:
     Ui::Task_PassiveFlyAround *passiveFlyAroundUi;
     QString taskBackgroundGreenStyle;
     QString taskBackgroundWhiteStyle;
     QString switchStyle;
+    QString transparentBackgroundStyle;
     QSize initialButtonSize;
+    ulong passiveSpeed;
+    ulong activeSpeed;
 
     void readInStyleSheets();
     void setSwitchButtonBackground(QPushButton *button, bool on);
+    void showNumberProblemBox();
 
 };
 
