@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QJsonObject>
 #include <QPushButton>
+#include <QSlider>
 
 namespace Ui {
 class Task_PassiveFlyAround;

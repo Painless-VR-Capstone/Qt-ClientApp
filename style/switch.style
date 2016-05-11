@@ -1,3 +1,7 @@
 QPushButton {
     background-color: transparent;
 }
+
+QPushButton:checked {
+    background-color: transparent;
+}

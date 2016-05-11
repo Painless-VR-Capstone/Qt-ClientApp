@@ -10,9 +10,6 @@
 #include <QIcon>
 #include <QSize>
 
-static const QString ON_BUTTON_FILE_NAME = ":images/images/switch_on.png";
-static const QString OFF_BUTTON_FILE_NAME = ":images/images/switch_off.png";
-
 Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
     QWidget(parent),
     passiveFlyAroundUi(new Ui::Task_PassiveFlyAround)
@@ -24,33 +21,22 @@ Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
     passiveFlyAroundUi->movementBox->setStyleSheet(taskBackgroundWhiteStyle);
     passiveFlyAroundUi->elementsBox->setStyleSheet(taskBackgroundWhiteStyle);
     initialButtonSize = passiveFlyAroundUi->switchDirection->size();
-    setSwitchButtonBackground(passiveFlyAroundUi->switchDirection, false);
-    setSwitchButtonBackground(passiveFlyAroundUi->switchReactiveEnvironment, false);
-    setSwitchButtonBackground(passiveFlyAroundUi->switchSpeed, false);
-    setSwitchButtonBackground(passiveFlyAroundUi->switchTeleporting, false);
-    setSwitchButtonBackground(passiveFlyAroundUi->switchThrowProjectiles, false);
-    passiveFlyAroundUi->switchDirection->setStyleSheet(switchStyle);
-    passiveFlyAroundUi->switchReactiveEnvironment->setStyleSheet(switchStyle);
-    passiveFlyAroundUi->switchSpeed->setStyleSheet(switchStyle);
-    passiveFlyAroundUi->switchTeleporting->setStyleSheet(switchStyle);
-    passiveFlyAroundUi->switchThrowProjectiles->setStyleSheet(switchStyle);
-    passiveFlyAroundUi->switchDirection->setFocusPolicy(Qt::NoFocus);
-    passiveFlyAroundUi->switchReactiveEnvironment->setFocusPolicy(Qt::NoFocus);
-    passiveFlyAroundUi->switchSpeed->setFocusPolicy(Qt::NoFocus);
-    passiveFlyAroundUi->switchTeleporting->setFocusPolicy(Qt::NoFocus);
-    passiveFlyAroundUi->switchThrowProjectiles->setFocusPolicy(Qt::NoFocus);
-}
+    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchDirection,
+                                initialButtonSize,
+                                switchStyle);
+    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchReactiveEnvironment,
+                                initialButtonSize,
+                                switchStyle);
+    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchSpeed,
+                                initialButtonSize,
+                                switchStyle);
+    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchTeleporting,
+                                initialButtonSize,
+                                switchStyle);
+    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->switchThrowProjectiles,
+                                initialButtonSize,
+                                switchStyle);
 
-void Task_PassiveFlyAround::setSwitchButtonBackground(QPushButton *button, bool on)
-{
-    QPixmap pixmap(on ? ON_BUTTON_FILE_NAME : OFF_BUTTON_FILE_NAME);
-    QIcon icon(pixmap);
-    button->setIcon(icon);
-    QSize size = pixmap.size();
-    int buttonHeight = qRound((initialButtonSize.height()) * 0.8);
-    double ratio = ((double) size.width()) / size.height();
-    int width = qRound(buttonHeight * ratio);
-    button->setIconSize(QSize(width, buttonHeight));
 }
 
 Task_PassiveFlyAround::~Task_PassiveFlyAround()
@@ -73,25 +59,35 @@ QJsonObject Task_PassiveFlyAround::getJsonObject()
 
 void Task_PassiveFlyAround::on_switchSpeed_toggled(bool checked)
 {
-    setSwitchButtonBackground(passiveFlyAroundUi->switchSpeed, checked);
+    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchSpeed,
+                                     initialButtonSize,
+                                     checked);
 }
 
 void Task_PassiveFlyAround::on_switchDirection_toggled(bool checked)
 {
-    setSwitchButtonBackground(passiveFlyAroundUi->switchDirection, checked);
+    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchDirection,
+                                     initialButtonSize,
+                                     checked);
 }
 
 void Task_PassiveFlyAround::on_switchThrowProjectiles_toggled(bool checked)
 {
-    setSwitchButtonBackground(passiveFlyAroundUi->switchThrowProjectiles, checked);
+    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchThrowProjectiles,
+                                     initialButtonSize,
+                                     checked);
 }
 
 void Task_PassiveFlyAround::on_switchTeleporting_toggled(bool checked)
 {
-    setSwitchButtonBackground(passiveFlyAroundUi->switchTeleporting, checked);
+    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchTeleporting,
+                                     initialButtonSize,
+                                     checked);
 }
 
 void Task_PassiveFlyAround::on_switchReactiveEnvironment_toggled(bool checked)
 {
-    setSwitchButtonBackground(passiveFlyAroundUi->switchReactiveEnvironment, checked);
+    Utils::setSwitchButtonBackground(passiveFlyAroundUi->switchReactiveEnvironment,
+                                     initialButtonSize,
+                                     checked);
 }
