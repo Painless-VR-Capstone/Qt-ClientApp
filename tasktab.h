@@ -9,7 +9,7 @@
 #include <QGridLayout>
 
 namespace Ui {
-    class TaskTab;
+class TaskTab;
 }
 
 class TaskTab : public QWidget
@@ -39,6 +39,7 @@ private:
     Task_PassiveFlyAround *passiveFlyAroundWidget;
     Task_PlatformHopper *platformHopperWidget;
     Task_ObjectiveFlyAround *objectiveFlyAroundWidget;
+    QWidget *emptyWidget;
     TaskLayout currentTask;
     QString taskButtonStyle;
     QString taskBoxStyle;
@@ -46,6 +47,8 @@ private:
 
     void readInStyleSheets();
     void setTaskOptionsLayout(TaskLayout newLayout);
+    void addWidgetToLayout(QGridLayout *layout, int column, QWidget *widget);
+    void removeAllChildrenOfLayout(QGridLayout *layout);
 };
 
 #endif // TASKTAB_H

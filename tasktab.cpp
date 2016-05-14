@@ -7,29 +7,21 @@
 #include <QResource>
 #include <QTextStream>
 #include <QFile>
+#include <QSpacerItem>
 
 TaskTab::TaskTab(QWidget *parent) :
     QWidget(parent),
     taskTabUi(new Ui::TaskTab)
 {
     taskTabUi->setupUi(this);
-    passiveFlyAroundWidget = new Task_PassiveFlyAround(taskTabUi->passiveFlyAroundBox);
-    objectiveFlyAroundWidget = new Task_ObjectiveFlyAround(taskTabUi->objectiveFlyAroundBox);
-    platformHopperWidget = new Task_PlatformHopper(taskTabUi->platformHopperButton);
-    QGridLayout *passiveLayout = new QGridLayout();
-    QGridLayout *objectiveLayout = new QGridLayout();
-    QGridLayout *platformLayout = new QGridLayout();
-    passiveLayout->addWidget(passiveFlyAroundWidget);
-    objectiveLayout->addWidget(objectiveFlyAroundWidget);
-    platformLayout->addWidget(platformHopperWidget);
-    QPalette palette = taskTabUi->emptyBox->palette();
-    palette.setColor(QPalette::Background, QColor(Qt::transparent));
-    taskTabUi->emptyBox->setAutoFillBackground(true);
-    taskTabUi->emptyBox->setPalette(palette);
-    taskTabUi->emptyBox->update();
-    taskTabUi->passiveFlyAroundBox->setFixedHeight(passiveLayout->sizeHint().height());
-    taskTabUi->platformHopperBox->setFixedHeight(platformLayout->sizeHint().height());
-    taskTabUi->objectiveFlyAroundBox->setFixedHeight(objectiveLayout->sizeHint().height());
+    passiveFlyAroundWidget = new Task_PassiveFlyAround(taskTabUi->column0Box);
+    objectiveFlyAroundWidget = new Task_ObjectiveFlyAround(taskTabUi->column1Box);
+    platformHopperWidget = new Task_PlatformHopper(taskTabUi->column0Box);
+    emptyWidget = new QWidget(taskTabUi->column1Box);
+    QGridLayout *column0Layout = new QGridLayout();
+    QGridLayout *column1Layout = new QGridLayout();
+    taskTabUi->column0Box->setLayout(column0Layout);
+    taskTabUi->column1Box->setLayout(column1Layout);
 
     readInStyleSheets();
 
@@ -55,22 +47,25 @@ TaskTab::TaskTab(QWidget *parent) :
     /*
      * TEST CODE
      */
-    palette = taskTabUi->passiveWidget->palette();
-    palette.setColor(QPalette::Background, QColor(Qt::red));
-    taskTabUi->passiveWidget->setAutoFillBackground(true);
-    taskTabUi->passiveWidget->setPalette(palette);
-    palette = taskTabUi->platformWidget->palette();
-    palette.setColor(QPalette::Background, QColor(Qt::blue));
-    taskTabUi->platformWidget->setAutoFillBackground(true);
-    taskTabUi->platformWidget->setPalette(palette);
-    palette = taskTabUi->emptyWidget->palette();
-    palette.setColor(QPalette::Background, QColor(Qt::green));
-    taskTabUi->emptyWidget->setAutoFillBackground(true);
-    taskTabUi->emptyWidget->setPalette(palette);
-    palette = taskTabUi->objectiveWidget->palette();
-    palette.setColor(QPalette::Background, QColor(Qt::yellow));
-    taskTabUi->objectiveWidget->setAutoFillBackground(true);
-    taskTabUi->objectiveWidget->setPalette(palette);
+    QPalette palette = passiveFlyAroundWidget->palette();
+    palette.setColor(QPalette::Background, Qt::red);
+    passiveFlyAroundWidget->setAutoFillBackground(true);
+    passiveFlyAroundWidget->setPalette(palette);
+//    palette = platformHopperWidget->palette();
+//    palette.setColor(QPalette::Background, Qt::blue);
+//    platformHopperWidget->setAutoFillBackground(true);
+//    platformHopperWidget->setPalette(palette);
+    palette = objectiveFlyAroundWidget->palette();
+    palette.setColor(QPalette::Background, Qt::yellow);
+    objectiveFlyAroundWidget->setAutoFillBackground(true);
+    objectiveFlyAroundWidget->setPalette(palette);
+    palette = emptyWidget->palette();
+    palette.setColor(QPalette::Background, Qt::green);
+    emptyWidget->setAutoFillBackground(true);
+    emptyWidget->setPalette(palette);
+    /*
+     * END TEST CODE
+     */
 }
 
 void TaskTab::readInStyleSheets()
@@ -85,6 +80,24 @@ TaskTab::~TaskTab()
     delete taskTabUi;
 }
 
+void TaskTab::addWidgetToLayout(QGridLayout *layout, int column, QWidget *widget)
+{
+    layout->addWidget(widget, 0, column);
+    layout->setColumnStretch(column, 1);
+}
+
+void TaskTab::removeAllChildrenOfLayout(QGridLayout *layout)
+{
+    QLayoutItem *child = layout->takeAt(0);
+    int i = 0;
+    while(child != 0)
+    {
+        child = layout->takeAt(0);
+        i++;
+    }
+    qDebug() << "removed" << i << "widgets from the optionsBox";
+}
+
 void TaskTab::setTaskOptionsLayout(TaskLayout newLayout)
 {
     if (currentTask == newLayout)
@@ -92,55 +105,36 @@ void TaskTab::setTaskOptionsLayout(TaskLayout newLayout)
         return;
     }
 
+    QGridLayout *column0Layout = ((QGridLayout *) taskTabUi->column0Box->layout());
+    QGridLayout *column1Layout = ((QGridLayout *) taskTabUi->column1Box->layout());
+    QWidget *spacer0 = new QWidget();
+    QWidget *spacer1 = new QWidget();
+    spacer0->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+    spacer1->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+
     switch (newLayout)
     {
     case passiveFlyAround:
-//        taskTabUi->passiveFlyAroundBox->setVisible(true);
-//        taskTabUi->emptyBox->setVisible(true);
-//        taskTabUi->platformHopperBox->setVisible(false);
-//        taskTabUi->objectiveFlyAroundBox->setVisible(false);
-        taskTabUi->passiveWidget->setVisible(true);
-        taskTabUi->emptyBox->setVisible(true);
-        taskTabUi->platformHopperBox->setVisible(false);
-        taskTabUi->objectiveFlyAroundBox->setVisible(false);
-        taskTabUi->passiveFlyAroundBox->setStyleSheet(taskBoxStyle);
-        taskTabUi->platformHopperBox->setStyleSheet(emptyStyle);
-        taskTabUi->objectiveFlyAroundBox->setStyleSheet(emptyStyle);
-        Utils::giveWidgetShadow(taskTabUi->passiveFlyAroundBox);
-        taskTabUi->platformHopperBox->setGraphicsEffect(NULL);
-        taskTabUi->objectiveFlyAroundBox->setGraphicsEffect(NULL);
+        removeAllChildrenOfLayout(column0Layout);
+        removeAllChildrenOfLayout(column1Layout);
+        column0Layout->addWidget(passiveFlyAroundWidget, 0, 0);
+        column0Layout->addWidget(spacer0, 1, 0);
+        column1Layout->addWidget(emptyWidget, 0, 0);
+        column1Layout->addWidget(spacer1, 1, 0);
+        taskTabUi->column0Box->update();
+        taskTabUi->column1Box->update();
         break;
     case platformHopper:
-//        taskTabUi->passiveFlyAroundBox->setVisible(false);
-//        taskTabUi->emptyBox->setVisible(true);
-//        taskTabUi->platformHopperBox->setVisible(true);
-//        taskTabUi->objectiveFlyAroundBox->setVisible(false);
-        taskTabUi->passiveWidget->setVisible(false);
-        taskTabUi->emptyBox->setVisible(true);
-        taskTabUi->platformHopperBox->setVisible(true);
-        taskTabUi->objectiveFlyAroundBox->setVisible(false);
-        taskTabUi->passiveFlyAroundBox->setStyleSheet(emptyStyle);
-        taskTabUi->platformHopperBox->setStyleSheet(taskBoxStyle);
-        taskTabUi->objectiveFlyAroundBox->setStyleSheet(emptyStyle);
-        taskTabUi->passiveFlyAroundBox->setGraphicsEffect(NULL);
-        Utils::giveWidgetShadow(taskTabUi->platformHopperBox);
-        taskTabUi->passiveFlyAroundBox->setGraphicsEffect(NULL);
         break;
     case objectiveFlyAround:
-//        taskTabUi->passiveFlyAroundBox->setVisible(true);
-//        taskTabUi->emptyBox->setVisible(false);
-//        taskTabUi->platformHopperBox->setVisible(false);
-//        taskTabUi->objectiveFlyAroundBox->setVisible(true);
-        taskTabUi->passiveWidget->setVisible(true);
-        taskTabUi->emptyBox->setVisible(false);
-        taskTabUi->platformHopperBox->setVisible(false);
-        taskTabUi->objectiveFlyAroundBox->setVisible(true);
-        taskTabUi->passiveFlyAroundBox->setStyleSheet(taskBoxStyle);
-        taskTabUi->platformHopperBox->setStyleSheet(emptyStyle);
-        taskTabUi->objectiveFlyAroundBox->setStyleSheet(taskBoxStyle);
-        Utils::giveWidgetShadow(taskTabUi->passiveFlyAroundBox);
-        taskTabUi->platformHopperBox->setGraphicsEffect(NULL);
-        Utils::giveWidgetShadow(taskTabUi->objectiveFlyAroundBox);
+        removeAllChildrenOfLayout(column0Layout);
+        removeAllChildrenOfLayout(column1Layout);
+        column0Layout->addWidget(passiveFlyAroundWidget, 0, 0);
+        column0Layout->addWidget(spacer0, 1, 0);
+        column1Layout->addWidget(objectiveFlyAroundWidget, 0, 0);
+        column1Layout->addWidget(spacer1, 1, 0);
+        taskTabUi->column0Box->update();
+        taskTabUi->column1Box->update();
         break;
     }
     currentTask = newLayout;
