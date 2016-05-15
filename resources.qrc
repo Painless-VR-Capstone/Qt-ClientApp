@@ -11,5 +11,6 @@
         <file>style/task_options_background_white.style</file>
         <file>style/switch.style</file>
         <file>style/transparent_background.style</file>
+        <file>style/frame_style.style</file>
     </qresource>
 </RCC>

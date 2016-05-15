@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QWidget>
 #include <QObjectList>
+#include <QJsonArray>
 
 static const QString SWITCH_STYLE_FILE_NAME = "switch.style";
 static const QString ON_BUTTON_FILE_NAME = ":images/images/switch_on.png";
@@ -100,7 +101,37 @@ void Utils::setSwitchButtonBackground(QPushButton *switchButton,
     switchButton->setIconSize(QSize(width, buttonHeight));
 }
 
+QString Utils::getJsonValueForColor(QColor color)
+{
+    QString result("[");
+    result.append(color.red())
+          .append(", ")
+          .append(color.green())
+          .append(", ")
+          .append(color.blue())
+          .append("]");
+    return result;
 
+}
+
+double Utils::getJsonValueFromSlider(QSlider *slider)
+{
+    return ((double) slider->value()) / slider->maximum();
+}
+
+int Utils::sliderValueForJsonValue(double jsonValue, QSlider *slider)
+{
+    return qRound(slider->maximum() * jsonValue);
+}
+
+QColor Utils::getColorFromRGBJsonValue(QJsonValue value)
+{
+    QJsonArray arr = value.toArray();
+    int r = qRound(arr.at(0).toDouble() * 255);
+    int g = qRound(arr.at(1).toDouble() * 255);
+    int b = qRound(arr.at(2).toDouble() * 255);
+    return QColor(r, g, b);
+}
 
 
 

@@ -17,19 +17,13 @@ Task_PassiveFlyAround::Task_PassiveFlyAround(QWidget *parent) :
 {
     passiveFlyAroundUi->setupUi(this);
     readInStyleSheets();
-    initialButtonSize = passiveFlyAroundUi->projectilesSwitch->size();
-    Utils::makeButtonIntoSwitch(passiveFlyAroundUi->projectilesSwitch,
-                                initialButtonSize,
-                                switchStyle);
     passiveFlyAroundUi->lookBasedTurningRadioButton->setAutoExclusive(true);
     passiveFlyAroundUi->instantKeyboardRadioButton->setAutoExclusive(true);
     passiveFlyAroundUi->smoothKeyboardRadioButton->setAutoExclusive(true);
-//    passiveFlyAroundUi->passiveBox->setStyleSheet(taskBackgroundWhiteStyle);
-//    passiveFlyAroundUi->activeSpeedBox->setStyleSheet(transparentBackgroundStyle);
-//    passiveFlyAroundUi->passiveSpeedBox->setStyleSheet(transparentBackgroundStyle);
-//    passiveFlyAroundUi->turningTypeBox->setStyleSheet(transparentBackgroundStyle);
-//    passiveFlyAroundUi->projectileBox->setStyleSheet(transparentBackgroundStyle);
-//    Utils::giveWidgetShadow(passiveFlyAroundUi->passiveBox);
+    passiveFlyAroundUi->flightBox->setStyleSheet(taskBackgroundGreenStyle);
+    passiveFlyAroundUi->speedBox->setStyleSheet(taskBackgroundWhiteStyle);
+    passiveFlyAroundUi->movementBox->setStyleSheet(taskBackgroundWhiteStyle);
+    Utils::giveWidgetShadow(passiveFlyAroundUi->flightBox);
 }
 
 Task_PassiveFlyAround::~Task_PassiveFlyAround()
@@ -41,7 +35,6 @@ void Task_PassiveFlyAround::readInStyleSheets()
 {
     taskBackgroundGreenStyle = Utils::readInStyleSheet("task_options_background_green.style");
     taskBackgroundWhiteStyle = Utils::readInStyleSheet("task_options_background_white.style");
-    switchStyle = Utils::readInStyleSheet("switch.style");
     transparentBackgroundStyle = Utils::readInStyleSheet("transparent_background.style");
 
 }
@@ -50,13 +43,6 @@ QJsonObject Task_PassiveFlyAround::getJsonObject()
 {
     QJsonObject json;
     return json;
-}
-
-void Task_PassiveFlyAround::on_projectilesSwitch_toggled(bool checked)
-{
-    Utils::setSwitchButtonBackground(passiveFlyAroundUi->projectilesSwitch,
-                                     initialButtonSize,
-                                     checked);
 }
 
 void Task_PassiveFlyAround::showNumberProblemBox()
@@ -104,4 +90,9 @@ void Task_PassiveFlyAround::on_activeSpeedLineEdit_editingFinished()
     {
         activeSpeed = speed;
     }
+}
+
+void Task_PassiveFlyAround::setValuesFromJson(QJsonObject json)
+{
+
 }

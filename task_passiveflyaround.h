@@ -18,10 +18,9 @@ public:
     explicit Task_PassiveFlyAround(QWidget *parent = 0);
     ~Task_PassiveFlyAround();
     QJsonObject getJsonObject();
+    void setValuesFromJson(QJsonObject json);
 
 private slots:
-    void on_projectilesSwitch_toggled(bool checked);
-
     void on_passiveSpeedLineEdit_editingFinished();
 
     void on_activeSpeedLineEdit_editingFinished();
@@ -30,9 +29,7 @@ private:
     Ui::Task_PassiveFlyAround *passiveFlyAroundUi;
     QString taskBackgroundGreenStyle;
     QString taskBackgroundWhiteStyle;
-    QString switchStyle;
     QString transparentBackgroundStyle;
-    QSize initialButtonSize;
     ulong passiveSpeed;
     ulong activeSpeed;
 

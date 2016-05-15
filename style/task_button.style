@@ -4,7 +4,6 @@ QPushButton {
     border-width: 0px;
     border-radius: 6px;
     border-color: #AFDC88;
-    min-width: 10em;
     padding: 6px;
 }
 

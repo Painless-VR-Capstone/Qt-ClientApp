@@ -2,8 +2,8 @@
     background-color: #82B46F;
     border-style: outset;
     border-width: 0px;
-    border-radius: 10px;
-    border-color: #82B46F;
+    border-radius: 4px;
+    border-color: #F1F1F1;
     min-width: 10em;
     padding: 6px;
 }

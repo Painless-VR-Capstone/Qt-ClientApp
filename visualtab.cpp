@@ -5,23 +5,44 @@
 #include <QDebug>
 #include "utils.h"
 
+static const QString KEY_HUE = "hue";
+static const QString KEY_CONTRAST = "contrast";
+static const QString KEY_SATURATION = "saturation";
+static const QString KEY_BRIGHTNESS = "brightness";
+static const QString KEY_PLAYER = "playerColor";
+static const QString KEY_HAZARD = "hazardColor";
+static const QString KEY_ENEMY = "enemyColor";
+static const QString KEY_OBJECTIVE = "objectiveColor";
+static const QString KEY_CLOUD_NIGHT_SKY = "cloudNightSkyColor";
+static const QString KEY_FOG_EXISTS = "fogExists";
+static const QString KEY_FOG_DISTANCE = "fogDistance";
+static const QString KEY_SKYBOX_EXISTS = "skyboxExists";
+
 VisualTab::VisualTab(QWidget *parent) :
     QWidget(parent),
     visualTabUi(new Ui::VisualTab)
 {
     visualTabUi->setupUi(this);
-    visualTabUi->colorPropertiesBox->setStyleSheet(
-                Utils::readInStyleSheet("task_options_background_white.style"));
-    Utils::giveWidgetShadow(visualTabUi->colorPropertiesBox);
-    visualTabUi->sceneElementsBox->setStyleSheet(
-                Utils::readInStyleSheet("task_options_background_white.style"));
-    Utils::giveWidgetShadow(visualTabUi->sceneElementsBox);
-    visualTabUi->userBodyComboBox->insertItem(0, "Human");
-    visualTabUi->userBodyComboBox->insertItem(1, "Robot");
-    visualTabUi->userBodyComboBox->insertItem(2, "Orb");
-    visualTabUi->texturesComboBox->insertItem(0, "Flat");
-    visualTabUi->texturesComboBox->insertItem(1, "Flat + Pattern");
-    visualTabUi->texturesComboBox->insertItem(2, "Pbr");
+    readInStyleSheets();
+    visualTabUi->colorOptionsBox->setStyleSheet(greenBackground);
+    visualTabUi->environmentOptionsBox->setStyleSheet(greenBackground);
+    Utils::giveWidgetShadow(visualTabUi->colorOptionsBox);
+    Utils::giveWidgetShadow(visualTabUi->environmentOptionsBox);
+    visualTabUi->colorOptionsInnerBox->setStyleSheet(whiteBackground);
+    visualTabUi->environmentOptionsInnerBox->setStyleSheet(whiteBackground);
+    visualTabUi->fogColorButton->setStyleSheet(greenButton);
+    visualTabUi->hazardColorButton->setStyleSheet(greenButton);
+    visualTabUi->nightCloudColorButton->setStyleSheet(greenButton);
+    visualTabUi->objectiveColorButton->setStyleSheet(greenButton);
+    visualTabUi->playerColorButton->setStyleSheet(greenButton);
+    visualTabUi->enemyColorButton->setStyleSheet(greenButton);
+}
+
+void VisualTab::readInStyleSheets()
+{
+    greenBackground = Utils::readInStyleSheet("task_options_background_green.style");
+    whiteBackground = Utils::readInStyleSheet("task_options_background_white.style");
+    greenButton = Utils::readInStyleSheet("task_button.style");
 }
 
 VisualTab::~VisualTab()
@@ -31,49 +52,19 @@ VisualTab::~VisualTab()
 
 void VisualTab::addValuesToJson(QJsonObject *json)
 {
+    json->insert(KEY_HUE, Utils::getJsonValueFromSlider(visualTabUi->hueSlider));
+    json->insert(KEY_CONTRAST, Utils::getJsonValueFromSlider(visualTabUi->contrastSlider));
+    json->insert(KEY_SATURATION, Utils::getJsonValueFromSlider(visualTabUi->saturationSlider));
+    json->insert(KEY_BRIGHTNESS, Utils::getJsonValueFromSlider(visualTabUi->brightnessSlider));
+    json->insert(KEY_PLAYER, Utils::getJsonValueForColor(playerColor));
+    json->insert(KEY_HAZARD, Utils::getJsonValueForColor(hazardColor));
+    json->insert(KEY_ENEMY, Utils::getJsonValueForColor(enemyColor));
+    json->insert(KEY_OBJECTIVE, Utils::getJsonValueForColor(objectiveColor));
+    json->insert(KEY_CLOUD_NIGHT_SKY, Utils::getJsonValueForColor(nightCloudColor));
+    json->insert(KEY_FOG_EXISTS, visualTabUi->fogCheckBox->isChecked());
+    json->insert(KEY_FOG_DISTANCE, Utils::getJsonValueFromSlider(visualTabUi->fogDistanceSlider));
+    json->insert(KEY_SKYBOX_EXISTS, visualTabUi->skyBoxCheckBox->isChecked());
 
-}
-
-void VisualTab::on_setThemeButton_clicked()
-{
-    QColor color = getColorFromDialog();
-    themeColor = color;
-    updateButtonFromColor(visualTabUi->setThemeButton, color);
-}
-
-void VisualTab::on_contrastSlider_sliderMoved(int position)
-{
-
-}
-
-void VisualTab::on_setMaterial1_clicked()
-{
-    QColor color = getColorFromDialog();
-    material1Color = color;
-    updateButtonFromColor(visualTabUi->setMaterial1, color);
-
-}
-
-void VisualTab::on_setMaterial2_clicked()
-{
-    QColor color = getColorFromDialog();
-    material2Color = color;
-    updateButtonFromColor(visualTabUi->setMaterial2, color);
-
-}
-
-void VisualTab::on_setMaterial3_clicked()
-{
-    QColor color = getColorFromDialog();
-    material3Color = color;
-    updateButtonFromColor(visualTabUi->setMaterial3, color);
-}
-
-void VisualTab::on_setMaterial4_clicked()
-{
-    QColor color = getColorFromDialog();
-    material4Color = color;
-    updateButtonFromColor(visualTabUi->setMaterial4, color);
 }
 
 QColor VisualTab::getColorFromDialog()
@@ -110,4 +101,109 @@ void VisualTab::updateButtonFromColor(QPushButton *button, QColor color)
 {
     button->setStyleSheet(getStyleSheetForColor(color));
     button->update();
+}
+
+void VisualTab::setButtonColor(QPushButton *button, QColor color)
+{
+    button->setStyleSheet(getStyleSheetForColor(color));
+}
+
+void VisualTab::on_playerColorButton_clicked()
+{
+    playerColor = getColorFromDialog();
+    setButtonColor(visualTabUi->playerColorButton, playerColor);
+}
+
+void VisualTab::on_enemyColorButton_clicked()
+{
+    enemyColor = getColorFromDialog();
+    setButtonColor(visualTabUi->enemyColorButton, enemyColor);
+}
+
+void VisualTab::on_hazardColorButton_clicked()
+{
+    hazardColor = getColorFromDialog();
+    setButtonColor(visualTabUi->hazardColorButton, hazardColor);
+}
+
+void VisualTab::on_objectiveColorButton_clicked()
+{
+    objectiveColor = getColorFromDialog();
+    setButtonColor(visualTabUi->objectiveColorButton, objectiveColor);
+}
+
+void VisualTab::on_fogColorButton_clicked()
+{
+    fogColor = getColorFromDialog();
+    setButtonColor(visualTabUi->fogColorButton, fogColor);
+}
+
+void VisualTab::on_nightCloudColorButton_clicked()
+{
+    nightCloudColor = getColorFromDialog();
+    setButtonColor(visualTabUi->nightCloudColorButton, nightCloudColor);
+}
+
+void VisualTab::setValuesFromJson(QJsonObject json)
+{
+    if (json.contains(KEY_HUE))
+    {
+        visualTabUi->hueSlider->setValue(
+                    Utils::sliderValueForJsonValue(json.value(KEY_HUE).toDouble(),
+                                                   visualTabUi->hueSlider)
+                    );
+    }
+    if (json.contains(KEY_CONTRAST))
+    {
+        visualTabUi->hueSlider->setValue(
+                    Utils::sliderValueForJsonValue(json.value(KEY_CONTRAST).toDouble(),
+                                                   visualTabUi->hueSlider)
+                    );
+    }
+    if (json.contains(KEY_SATURATION))
+    {
+        visualTabUi->hueSlider->setValue(
+                    Utils::sliderValueForJsonValue(json.value(KEY_SATURATION).toDouble(),
+                                                   visualTabUi->hueSlider)
+                    );
+    }
+    if (json.contains(KEY_BRIGHTNESS))
+    {
+        visualTabUi->hueSlider->setValue(
+                    Utils::sliderValueForJsonValue(json.value(KEY_BRIGHTNESS).toDouble(),
+                                                   visualTabUi->hueSlider)
+                    );
+    }
+    if (json.contains(KEY_FOG_DISTANCE))
+    {
+        visualTabUi->hueSlider->setValue(
+                    Utils::sliderValueForJsonValue(json.value(KEY_HUE).toDouble(),
+                                                   visualTabUi->hueSlider)
+                    );
+    }
+    if (json.contains(KEY_PLAYER))
+    {
+        playerColor = Utils::getColorFromRGBJsonValue(json.value(KEY_PLAYER));
+        setButtonColor(visualTabUi->playerColorButton, playerColor);
+    }
+    if (json.contains(KEY_HAZARD))
+    {
+        hazardColor = Utils::getColorFromRGBJsonValue(json.value(KEY_HAZARD));
+        setButtonColor(visualTabUi->hazardColorButton, hazardColor);
+    }
+    if (json.contains(KEY_ENEMY))
+    {
+        enemyColor = Utils::getColorFromRGBJsonValue(json.value(KEY_ENEMY));
+        setButtonColor(visualTabUi->enemyColorButton, enemyColor);
+    }
+    if (json.contains(KEY_OBJECTIVE))
+    {
+        objectiveColor = Utils::getColorFromRGBJsonValue(json.value(KEY_OBJECTIVE));
+        setButtonColor(visualTabUi->objectiveColorButton, objectiveColor);
+    }
+    if (json.contains(KEY_CLOUD_NIGHT_SKY))
+    {
+        nightCloudColor = Utils::getColorFromRGBJsonValue(json.value(KEY_CLOUD_NIGHT_SKY));
+        setButtonColor(visualTabUi->nightCloudColorButton, nightCloudColor);
+    }
 }

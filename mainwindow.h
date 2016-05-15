@@ -30,11 +30,18 @@ public:
     ~MainWindow();
 
 private slots:
+
     void on_actionSave_triggered();
 
-    void on_actionSave_As_triggered();
+    void on_actionSave_Preset_As_Stand_Alone_triggered();
 
-    void on_actionSave_and_run_Unity_triggered();
+    void on_actionOpen_Preset_triggered();
+
+    void on_actionRun_on_Monitor_triggered();
+
+    void on_actionRun_on_HMD_triggered();
+
+    void on_actionNew_Preset_triggered();
 
 private:
     Ui::MainWindow *mainWindowUi;

@@ -11,7 +11,9 @@
 #include <QWidget>
 #include <QProcess>
 
-const QString FILENAME("preset.json");
+static const QString FILENAME = "preset.preset";
+static const QString NAME_FILTER_PRESET = "Preset files (*.preset)";
+static const QString NAME_FILTER_ANY = "Any files (*)";
 
 /*
  * Sets up ui, sets
@@ -42,7 +44,7 @@ QJsonObject MainWindow::getJSONObject()
 {
     QJsonObject json;
     taskTab->addValuesToJson(&json);
-//    audioTab->addValuesToJson(&json);
+    audioTab->addValuesToJson(&json);
     visualTab->addValuesToJson(&json);
     return json;
 }
@@ -64,46 +66,12 @@ void MainWindow::writeToFile(QFile *file, bool withMessage = true)
     }
 }
 
-//void MainWindow::on_logJSONButton_clicked()
-//{
-//    QJsonObject json = getJSONObject();
-//    qDebug() << "{";
-//    foreach (QString key, json.keys())
-//    {
-//        qDebug() << "   " << key << ":" << json.value(key).toString() << ",";
-//    }
-//    qDebug() << "}";
-//}
-
 void MainWindow::on_actionSave_triggered()
 {
-    QString fileName(QDir::currentPath());
-    fileName.append("/");
-    fileName.append(FILENAME);
-    QFile file(fileName);
-    if (file.exists()) {
-        QMessageBox messageBox;
-        QString message("The file ");
-        message.append(fileName);
-        message.append(" already exists.");
-        messageBox.setText(message);
-        messageBox.setInformativeText("Do you want to overwrite it?");
-        messageBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        messageBox.setDefaultButton(QMessageBox::Yes);
-        int result = messageBox.exec();
-        switch(result) {
-            case QMessageBox::Yes:
-                writeToFile(&file);
-                break;
-            case QMessageBox::No:
-                break;
-        }
-    } else {
-        writeToFile(&file);
-    }
+
 }
 
-void MainWindow::on_actionSave_As_triggered()
+void MainWindow::on_actionSave_Preset_As_Stand_Alone_triggered()
 {
     QFileDialog dialog(this);
     dialog.setViewMode(QFileDialog::Detail);
@@ -120,56 +88,56 @@ void MainWindow::on_actionSave_As_triggered()
     }
 }
 
-void MainWindow::on_actionSave_and_run_Unity_triggered()
+void MainWindow::on_actionOpen_Preset_triggered()
 {
-    QDir dir;
-    dir.cdUp();
-    if (!dir.exists("PVR_Unity_Prototype"))
+    QFileDialog dialog(this);
+    dialog.setViewMode(QFileDialog::Detail);
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    QStringList filters;
+    filters << NAME_FILTER_PRESET
+            << NAME_FILTER_ANY;
+    dialog.setNameFilters(filters);
+    QString file;
+    if (dialog.exec())
     {
-        QMessageBox messageBox;
-        QString message("It appears the Qt client is not in directory where it is adjacent to a PainlessVR unity build.");
-        messageBox.setText(message);
-        messageBox.setStandardButtons(QMessageBox::Ok);
-        messageBox.setDefaultButton(QMessageBox::Ok);
-        messageBox.exec();
-        return;
+        QFile file(dialog.selectedFiles().at(0));
+        if (file.exists())
+        {
+            QJsonDocument doc = QJsonDocument::fromBinaryData(file.readAll());
+            if (doc.isNull())
+            {
+                QMessageBox box;
+                QString boxText;
+                boxText.append("It appears that ")
+                       .append(QFileInfo(file).fileName())
+                       .append("is not a valid preset file");
+                box.setText("It appears that file is not a valid preset");
+                box.setStandardButtons(QMessageBox::Ok);
+            }
+            else
+            {
+                QJsonObject json = doc.object();
+                taskTab->setValuesFromJson(json);
+                audioTab->setValuesFromJson(json);
+                visualTab->setValuesFromJson(json);
+            }
+        }
+
     }
-    dir.cd("PVR_Unity_Prototype");
-    QFile unityFile(dir.filePath("PVR.exe"));
-    qDebug() << "Unity file name:" << unityFile.fileName();
-    if (!unityFile.exists()) {
-        QMessageBox messageBox;
-        QString message("It appears there is no unity executable in the PVR_unity_prototype directory.");
-        messageBox.setText(message);
-        messageBox.setStandardButtons(QMessageBox::Ok);
-        messageBox.setDefaultButton(QMessageBox::Ok);
-        messageBox.exec();
-        return;
-    }
-    QFile preset(dir.path().append("preset.json"));
-    writeToFile(&preset, false);
-    qDebug() << "Unity file name:" << unityFile.fileName();
-    QProcess::startDetached(unityFile.fileName());
 }
 
+void MainWindow::on_actionRun_on_Monitor_triggered()
+{
 
+}
 
+void MainWindow::on_actionRun_on_HMD_triggered()
+{
 
+}
 
+void MainWindow::on_actionNew_Preset_triggered()
+{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

@@ -4,6 +4,7 @@
 #include <QJsonObject>
 #include <QGraphicsDropShadowEffect>
 #include <QPushButton>
+#include <QSlider>
 
 class Utils
 {
@@ -22,6 +23,13 @@ public:
     static void setSwitchButtonBackground(QPushButton *switchButton,
                                           QSize initialButtonSize,
                                           bool on);
+    static QString getJsonValueForColor(QColor color);
+
+    static double getJsonValueFromSlider(QSlider *slider);
+
+    static int sliderValueForJsonValue(double jsonValue, QSlider *slider);
+
+    static QColor getColorFromRGBJsonValue(QJsonValue value);
 
 };
 
