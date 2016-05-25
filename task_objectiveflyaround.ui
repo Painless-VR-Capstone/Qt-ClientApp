@@ -164,6 +164,9 @@
               <property name="text">
                <string>Easy</string>
               </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="1" column="2">
@@ -195,6 +198,9 @@
              <widget class="QRadioButton" name="amountLowRadioButton">
               <property name="text">
                <string>Low</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
