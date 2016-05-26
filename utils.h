@@ -23,13 +23,13 @@ public:
     static void setSwitchButtonBackground(QPushButton *switchButton,
                                           QSize initialButtonSize,
                                           bool on);
-    static QString getJsonValueForColor(QColor color);
+    static QString getJsonValueForColor(QColor color, bool withAlpha = false);
 
     static double getJsonValueFromSlider(QSlider *slider);
 
     static int sliderValueForJsonValue(double jsonValue, QSlider *slider);
 
-    static QColor getColorFromRGBJsonValue(QJsonValue value);
+    static QColor getColorFromRGBJsonValue(QJsonValue value, bool withAlpha = false);
 
 };
 

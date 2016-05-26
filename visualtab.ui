@@ -151,12 +151,12 @@
              </widget>
             </item>
             <item row="9" column="0">
-             <widget class="QPushButton" name="enemyColorButton">
+             <widget class="QPushButton" name="worldColorButton">
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
               </property>
               <property name="text">
-               <string>EnemyColor</string>
+               <string>World Color</string>
               </property>
              </widget>
             </item>

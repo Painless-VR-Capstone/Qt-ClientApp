@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QObjectList>
 #include <QJsonArray>
+#include <QJsonDocument>
 
 static const QString SWITCH_STYLE_FILE_NAME = "switch.style";
 static const QString ON_BUTTON_FILE_NAME = ":images/images/switch_on.png";
@@ -101,17 +102,17 @@ void Utils::setSwitchButtonBackground(QPushButton *switchButton,
     switchButton->setIconSize(QSize(width, buttonHeight));
 }
 
-QString Utils::getJsonValueForColor(QColor color)
+QString Utils::getJsonValueForColor(QColor color, bool withAlpha)
 {
-    QString result("[");
-    result.append(color.red())
-          .append(", ")
-          .append(color.green())
-          .append(", ")
-          .append(color.blue())
-          .append("]");
-    return result;
-
+    QJsonObject json;
+    json.insert("r", color.red());
+    json.insert("g", color.green());
+    json.insert("b", color.blue());
+    if (withAlpha)
+    {
+        json.insert("a", color.alpha());
+    }
+    return QJsonDocument(json).toJson(QJsonDocument::Compact);
 }
 
 double Utils::getJsonValueFromSlider(QSlider *slider)
@@ -124,13 +125,24 @@ int Utils::sliderValueForJsonValue(double jsonValue, QSlider *slider)
     return qRound(slider->maximum() * jsonValue);
 }
 
-QColor Utils::getColorFromRGBJsonValue(QJsonValue value)
+QColor Utils::getColorFromRGBJsonValue(QJsonValue value, bool withAlpha)
 {
-    QJsonArray arr = value.toArray();
-    int r = qRound(arr.at(0).toDouble() * 255);
-    int g = qRound(arr.at(1).toDouble() * 255);
-    int b = qRound(arr.at(2).toDouble() * 255);
-    return QColor(r, g, b);
+
+    QJsonObject obj = value.toObject();
+    int r = qRound(obj.find("r").value().toDouble() * 255);
+    int g = qRound(obj.find("g").value().toDouble() * 255);
+    int b = qRound(obj.find("b").value().toDouble() * 255);
+    int a;
+    QColor result;
+    if (withAlpha)
+    {
+        a = qRound(obj.find("a").value().toDouble() * 255);
+        result.setAlpha(a);
+    }
+    result.setRed(r);
+    result.setGreen(g);
+    result.setBlue(b);
+    return result;
 }
 
 

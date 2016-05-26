@@ -33,10 +33,12 @@ private slots:
 
     void on_nightCloudColorButton_clicked();
 
+    void on_worldColorButton_clicked();
+
 private:
     Ui::VisualTab *visualTabUi;
     QColor playerColor;
-    QColor enemyColor;
+    QColor worldColor;
     QColor uiColor;
     QColor hazardColor;
     QColor objectiveColor;

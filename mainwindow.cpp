@@ -11,8 +11,8 @@
 #include <QWidget>
 #include <QProcess>
 
-static const QString FILENAME = "preset.preset";
-static const QString NAME_FILTER_PRESET = "Preset files (*.preset)";
+static const QString FILE_EXTENSION = ".json";
+static const QString NAME_FILTER_PRESET = "Preset files (*.json)";
 static const QString NAME_FILTER_ANY = "Any files (*)";
 
 /*
@@ -77,7 +77,7 @@ void MainWindow::on_actionSave_Preset_As_Stand_Alone_triggered()
     dialog.setViewMode(QFileDialog::Detail);
     dialog.setAcceptMode(QFileDialog::AcceptSave);
     dialog.setFileMode(QFileDialog::AnyFile);
-    dialog.setLabelText(QFileDialog::FileName, FILENAME);
+    dialog.selectFile("preset.json");
     QStringList fileNames;
     if (dialog.exec()) {
         fileNames = dialog.selectedFiles();
@@ -104,7 +104,9 @@ void MainWindow::on_actionOpen_Preset_triggered()
         QFile file(dialog.selectedFiles().at(0));
         if (file.exists())
         {
-            QJsonDocument doc = QJsonDocument::fromBinaryData(file.readAll());
+            file.open(QIODevice::ReadOnly | QIODevice::Text);
+            QString jsonString = (QString) file.readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8());
             if (doc.isNull())
             {
                 QMessageBox box;
@@ -114,6 +116,7 @@ void MainWindow::on_actionOpen_Preset_triggered()
                        .append("is not a valid preset file");
                 box.setText("It appears that file is not a valid preset");
                 box.setStandardButtons(QMessageBox::Ok);
+                box.exec();
             }
             else
             {

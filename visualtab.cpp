@@ -11,7 +11,7 @@ static const QString KEY_SATURATION = "saturation";
 static const QString KEY_BRIGHTNESS = "brightness";
 static const QString KEY_PLAYER = "playerColor";
 static const QString KEY_HAZARD = "hazardColor";
-static const QString KEY_ENEMY = "enemyColor";
+static const QString KEY_WORLD = "worldColor";
 static const QString KEY_OBJECTIVE = "objectiveColor";
 static const QString KEY_CLOUD_NIGHT_SKY = "cloudNightSkyColor";
 static const QString KEY_FOG_EXISTS = "fogExists";
@@ -35,7 +35,7 @@ VisualTab::VisualTab(QWidget *parent) :
     visualTabUi->nightCloudColorButton->setStyleSheet(greenButton);
     visualTabUi->objectiveColorButton->setStyleSheet(greenButton);
     visualTabUi->playerColorButton->setStyleSheet(greenButton);
-    visualTabUi->enemyColorButton->setStyleSheet(greenButton);
+    visualTabUi->worldColorButton->setStyleSheet(greenButton);
 }
 
 void VisualTab::readInStyleSheets()
@@ -58,7 +58,7 @@ void VisualTab::addValuesToJson(QJsonObject *json)
     json->insert(KEY_BRIGHTNESS, Utils::getJsonValueFromSlider(visualTabUi->brightnessSlider));
     json->insert(KEY_PLAYER, Utils::getJsonValueForColor(playerColor));
     json->insert(KEY_HAZARD, Utils::getJsonValueForColor(hazardColor));
-    json->insert(KEY_ENEMY, Utils::getJsonValueForColor(enemyColor));
+    json->insert(KEY_WORLD, Utils::getJsonValueForColor(worldColor));
     json->insert(KEY_OBJECTIVE, Utils::getJsonValueForColor(objectiveColor));
     json->insert(KEY_CLOUD_NIGHT_SKY, Utils::getJsonValueForColor(nightCloudColor));
     json->insert(KEY_FOG_EXISTS, visualTabUi->fogCheckBox->isChecked());
@@ -114,10 +114,10 @@ void VisualTab::on_playerColorButton_clicked()
     setButtonColor(visualTabUi->playerColorButton, playerColor);
 }
 
-void VisualTab::on_enemyColorButton_clicked()
+void VisualTab::on_worldColorButton_clicked()
 {
-    enemyColor = getColorFromDialog();
-    setButtonColor(visualTabUi->enemyColorButton, enemyColor);
+    worldColor = getColorFromDialog();
+    setButtonColor(visualTabUi->worldColorButton, worldColor);
 }
 
 void VisualTab::on_hazardColorButton_clicked()
@@ -181,27 +181,27 @@ void VisualTab::setValuesFromJson(QJsonObject json)
                                                    visualTabUi->hueSlider)
                     );
     }
-    if (json.contains(KEY_PLAYER))
+    if (!json.value(KEY_PLAYER).toString("").compare(""))
     {
         playerColor = Utils::getColorFromRGBJsonValue(json.value(KEY_PLAYER));
         setButtonColor(visualTabUi->playerColorButton, playerColor);
     }
-    if (json.contains(KEY_HAZARD))
+    if (!json.value(KEY_HAZARD).toString("").compare(""))
     {
         hazardColor = Utils::getColorFromRGBJsonValue(json.value(KEY_HAZARD));
         setButtonColor(visualTabUi->hazardColorButton, hazardColor);
     }
-    if (json.contains(KEY_ENEMY))
+    if (!json.value(KEY_WORLD).toString("").compare(""))
     {
-        enemyColor = Utils::getColorFromRGBJsonValue(json.value(KEY_ENEMY));
-        setButtonColor(visualTabUi->enemyColorButton, enemyColor);
+        worldColor = Utils::getColorFromRGBJsonValue(json.value(KEY_WORLD), true);
+        setButtonColor(visualTabUi->worldColorButton, worldColor);
     }
-    if (json.contains(KEY_OBJECTIVE))
+    if (!json.value(KEY_OBJECTIVE).toString("").compare(""))
     {
         objectiveColor = Utils::getColorFromRGBJsonValue(json.value(KEY_OBJECTIVE));
         setButtonColor(visualTabUi->objectiveColorButton, objectiveColor);
     }
-    if (json.contains(KEY_CLOUD_NIGHT_SKY))
+    if (!json.value(KEY_CLOUD_NIGHT_SKY).toString("").compare(""))
     {
         nightCloudColor = Utils::getColorFromRGBJsonValue(json.value(KEY_CLOUD_NIGHT_SKY));
         setButtonColor(visualTabUi->nightCloudColorButton, nightCloudColor);

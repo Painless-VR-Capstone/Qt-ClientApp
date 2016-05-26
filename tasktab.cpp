@@ -161,6 +161,7 @@ void TaskTab::addValuesToJson(QJsonObject *json)
         break;
     case platformHopper:
         task = 2;
+
         break;
     case objectiveFlyAround:
         task = 3;
