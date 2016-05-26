@@ -105,12 +105,12 @@ void Utils::setSwitchButtonBackground(QPushButton *switchButton,
 QString Utils::getJsonValueForColor(QColor color, bool withAlpha)
 {
     QJsonObject json;
-    json.insert("r", color.red());
-    json.insert("g", color.green());
-    json.insert("b", color.blue());
+    json.insert("r", color.red() / 255.0);
+    json.insert("g", color.green() / 255.0);
+    json.insert("b", color.blue() / 255.0);
     if (withAlpha)
     {
-        json.insert("a", color.alpha());
+        json.insert("a", color.alpha() / 255.0);
     }
     return QJsonDocument(json).toJson(QJsonDocument::Compact);
 }

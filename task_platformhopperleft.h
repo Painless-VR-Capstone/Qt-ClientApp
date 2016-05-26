@@ -17,6 +17,7 @@ public:
     explicit Task_PlatformHopperLeft(QWidget *parent = 0);
     ~Task_PlatformHopperLeft();
     void setValuesFromJson(QJsonObject json);
+    void addValuesToJson(QJsonObject *json);
 
 private slots:
     void on_playerSpeedSpinBox_valueChanged(int arg1);
@@ -26,7 +27,6 @@ private:
     QString whiteBackground;
     QString greenBackground;
 
-    void addValuesToJson(QJsonObject *json);
     int getPlayerObjectValue();
     void readInStyleSheets();
 };

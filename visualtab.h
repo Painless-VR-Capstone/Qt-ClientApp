@@ -23,8 +23,6 @@ private slots:
 
     void on_playerColorButton_clicked();
 
-    void on_enemyColorButton_clicked();
-
     void on_hazardColorButton_clicked();
 
     void on_objectiveColorButton_clicked();

@@ -18,7 +18,7 @@ public:
     explicit Task_PassiveFlyAround(QWidget *parent = 0);
     ~Task_PassiveFlyAround();
     QJsonObject getJsonObject();
-    void setValuesFromJson(QJsonObject json);
+    void addValuesToJson(QJsonObject *json);
 
 private slots:
     void on_passiveSpeedLineEdit_editingFinished();

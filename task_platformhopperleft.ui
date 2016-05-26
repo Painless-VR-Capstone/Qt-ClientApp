@@ -339,8 +339,6 @@
            </layout>
            <zorder>platformWidthSpinBox</zorder>
            <zorder>label_7</zorder>
-           <zorder>platformWidthSpinBox</zorder>
-           <zorder>label_7</zorder>
            <zorder>horizontalSpacer_2</zorder>
           </widget>
          </item>
@@ -395,6 +393,39 @@
          </item>
          <item row="0" column="4">
           <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QWidget" name="textureBox" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Texture:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="textureSpinBox">
+           <property name="maximum">
+            <number>2</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>

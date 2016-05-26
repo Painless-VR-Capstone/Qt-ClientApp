@@ -92,7 +92,7 @@ void Task_PassiveFlyAround::on_activeSpeedLineEdit_editingFinished()
     }
 }
 
-void Task_PassiveFlyAround::setValuesFromJson(QJsonObject json)
+void Task_PassiveFlyAround::addValuesToJson(QJsonObject *json)
 {
 
 }

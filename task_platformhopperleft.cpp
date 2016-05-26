@@ -28,8 +28,8 @@ Task_PlatformHopperLeft::Task_PlatformHopperLeft(QWidget *parent) :
 
 void Task_PlatformHopperLeft::addValuesToJson(QJsonObject *json)
 {
-    json->insert(KEY_PLATFORM_SPEED, leftPlatformHopperUi->playerSpeedSlider->value());
-    json->insert(KEY_PLAYER_SPEED, leftPlatformHopperUi->playerSpeedSlider->value());
+    json->insert(KEY_PLATFORM_SPEED, leftPlatformHopperUi->playerSpeedSlider->value() / 100.0);
+    json->insert(KEY_PLAYER_SPEED, leftPlatformHopperUi->playerSpeedSlider->value() / 100.0);
     json->insert(KEY_PLATFORM_STREAM_WIDTH, leftPlatformHopperUi->platformWidthSpinBox->value());
     json->insert(KEY_PLAYER_OBJECT, getPlayerObjectValue());
     if (leftPlatformHopperUi->multiplePathsCheckBox->isChecked())

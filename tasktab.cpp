@@ -156,15 +156,18 @@ void TaskTab::addValuesToJson(QJsonObject *json)
     switch(currentTask)
     {
     case passiveFlyAround:
-        task = 1;
-        optionsJson = passiveFlyAroundWidget->getJsonObject();
+        task = 2;
+        passiveFlyAroundWidget->addValuesToJson(&optionsJson);
         break;
     case platformHopper:
-        task = 2;
-
+        leftPlatformHopperWidget->addValuesToJson(&optionsJson);
+        rightPlatformHopperWidget->addValuesToJson(&optionsJson);
+        task = 3;
         break;
     case objectiveFlyAround:
-        task = 3;
+        leftObjectiveFlyAroundWidget->addValuesToJson(&optionsJson);
+        rightObjectiveFlyAroundWidget->addValuesToJson(&optionsJson);
+        task = 2;
         break;
     }
     json->insert("task", task);
@@ -211,19 +214,19 @@ void TaskTab::setValuesFromJson(QJsonObject json)
     switch (currentTask)
     {
     case passiveFlyAround:
-        passiveFlyAroundWidget->setValuesFromJson(json);
+        passiveFlyAroundWidget->addValuesToJson(&json);
         setTaskOptionsLayout(passiveFlyAround, true);
         taskTabUi->passiveButton->setChecked(true);
         break;
     case objectiveFlyAround:
-        leftObjectiveFlyAroundWidget->setValuesFromJson(json);
-        rightObjectiveFlyAroundWidget->setValuesFromJson(json);
+        leftObjectiveFlyAroundWidget->addValuesToJson(&json);
+        rightObjectiveFlyAroundWidget->addValuesToJson(&json);
         setTaskOptionsLayout(objectiveFlyAround, true);
         taskTabUi->objectiveFlyAroundButton->setChecked(true);
         break;
     case platformHopper:
-        leftPlatformHopperWidget->setValuesFromJson(json);
-        rightPlatformHopperWidget->setValuesFromJson(json);
+        leftPlatformHopperWidget->addValuesToJson(&json);
+        rightPlatformHopperWidget->addValuesToJson(&json);
         setTaskOptionsLayout(platformHopper, true);
         taskTabUi->platformHopperButton->setChecked(true);
         break;
