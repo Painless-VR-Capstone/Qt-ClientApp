@@ -8,6 +8,7 @@ static const QString KEY_PLAYER_SPEED = "jumpSpeed";
 static const QString KEY_PLATFORM_STREAM_WIDTH = "platStreamWidth";
 static const QString KEY_PLAYER_OBJECT = "playerObject";
 static const QString KEY_MULTIPLE_PATHS = "multiplePaths";
+static const QString KEY_TEXTURES = "textures";
 
 Task_PlatformHopperLeft::Task_PlatformHopperLeft(QWidget *parent) :
     QWidget(parent),
@@ -32,6 +33,7 @@ void Task_PlatformHopperLeft::addValuesToJson(QJsonObject *json)
     json->insert(KEY_PLAYER_SPEED, leftPlatformHopperUi->playerSpeedSlider->value() / 100.0);
     json->insert(KEY_PLATFORM_STREAM_WIDTH, leftPlatformHopperUi->platformWidthSpinBox->value());
     json->insert(KEY_PLAYER_OBJECT, getPlayerObjectValue());
+    json->insert(KEY_TEXTURES, leftPlatformHopperUi->textureSpinBox->value());
     if (leftPlatformHopperUi->multiplePathsCheckBox->isChecked())
     {
         json->insert(KEY_MULTIPLE_PATHS, 1);

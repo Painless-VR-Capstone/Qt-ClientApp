@@ -60,6 +60,20 @@
          <item row="1" column="0">
           <widget class="QWidget" name="colorOptionsInnerBox" native="true">
            <layout class="QGridLayout" name="gridLayout_3">
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Saturation</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Brightness</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="0">
              <widget class="QSlider" name="hueSlider">
               <property name="maximum">
@@ -73,8 +87,58 @@
               </property>
              </widget>
             </item>
+            <item row="8" column="0">
+             <widget class="QPushButton" name="playerColorButton">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Player Color</string>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QPushButton" name="hazardColorButton">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Hazard Color</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Contrast</string>
+              </property>
+             </widget>
+            </item>
             <item row="5" column="0">
              <widget class="QSlider" name="contrastSlider">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QPushButton" name="objectiveColorButton">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="text">
+               <string>Objective Color</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QSlider" name="brightnessSlider">
               <property name="maximum">
                <number>100</number>
               </property>
@@ -93,40 +157,6 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Brightness</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QSlider" name="brightnessSlider">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>1</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Saturation</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Contrast</string>
-              </property>
-             </widget>
-            </item>
             <item row="7" column="0">
              <widget class="QSlider" name="saturationSlider">
               <property name="maximum">
@@ -140,43 +170,10 @@
               </property>
              </widget>
             </item>
-            <item row="10" column="0">
-             <widget class="QPushButton" name="hazardColorButton">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="text">
-               <string>Hazard Color</string>
-              </property>
-             </widget>
-            </item>
             <item row="9" column="0">
              <widget class="QPushButton" name="worldColorButton">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
               <property name="text">
                <string>World Color</string>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="0">
-             <widget class="QPushButton" name="objectiveColorButton">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="text">
-               <string>Objective Color</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <widget class="QPushButton" name="playerColorButton">
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="text">
-               <string>Player Color</string>
               </property>
              </widget>
             </item>
